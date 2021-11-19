@@ -1,4 +1,3 @@
-//var imgArr = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j","a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
 var numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 var containerBox = document.createElement("div");
@@ -32,6 +31,7 @@ function newBox(numb, flagNumb) {
   card.style.height = "100px";
   card.style.backgroundColor = "orange";
   card.style.margin = "10px";
+  let is_Click = false;
 
   var numLabel = document.createElement("div");
   card.appendChild(numLabel);
@@ -46,16 +46,13 @@ function newBox(numb, flagNumb) {
     card.style.backgroundImage = "url('./img/" + flagNumb + ".jpg')";
     card.style.backgroundSize = "contain";
     numLabel.style.color = "transparent";
-    isClick = true;
-    //console.log(isClick);
+    //is_Click = true;
   })
   return card;
 }
 
 function mouseClick(box1, box2) {
-  if (box1.id == box2.id) {
-    return true
-  }
+  if (box1.id == box2.id) return true
   else return false;
 }
 
@@ -65,34 +62,52 @@ for (let i = 0; i < 20; i++) {
   var card = newBox(i, temp1[i])
   cards.push(card);
 }
+
 function getID(box) {
   var idbox = box.id;
-  console.log(idbox);
   return idbox;
 }
 
+function isClick(object)
+{
+    object.onclick = function(){
+        object.is_Click = true;
+        return object.is_Click
+    }
+}
+
+function isGameOver(score)
+{
+    if(score <= 9000) alert("Game over");
+}
 function createBox(number) {
   let arrTemp = [];
-  let temp;
   let selected = [];
+  let score = 10000;
+
   for (let i = 0; i < number; i++) {
     arrTemp[i] = cards[i];
     cards[i].addEventListener("click", function () {
       getID(arrTemp[i]);
-      selected.unshift(arrTemp[i].id);
-      if (selected.length > 2) {
-        selected = [arrTemp[i].id];
+      selected.push(arrTemp[i]);
+      if(selected.length == 2){
+        isTouch = isMatched(selected[0].id, selected[1].id);
+        if(isTouch == true) score += 1000;
+        else score -=500;
+        isGameOver(score);
+        console.log(selected[0].id + "   " + selected[1].id);
+        console.log(score);
       }
-      console.log(selected)
+
+      if (selected.length > 2) selected = [arrTemp[i]];
+      console.log(selected);
     })
+    
   }
 }
 
-function isMatched(selected) {
-  if (selected[0].id == selected[1].id) {
-    return true;
-  }
+function isMatched(id_a, id_b) {
+  if (id_a == id_b) return true;
   else return false;
 }
-
 createBox(20);
