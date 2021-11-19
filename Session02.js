@@ -70,18 +70,29 @@ function getID(box) {
   console.log(idbox);
   return idbox;
 }
-let selected = [];
+
 function createBox(number) {
-  //let temp1 = shuffle(numArr);
   let arrTemp = [];
+  let temp;
+  let selected = [];
   for (let i = 0; i < number; i++) {
     arrTemp[i] = cards[i];
     cards[i].addEventListener("click", function () {
-      //console.log(mouseClick(cards[i].id, arrTemp[i].id));
       getID(arrTemp[i]);
-      selected.push(arrTemp[i]);
+      selected.unshift(arrTemp[i].id);
+      if (selected.length > 2) {
+        selected = [arrTemp[i].id];
+      }
+      console.log(selected)
     })
   }
 }
-console.log(selected);
+
+function isMatched(selected) {
+  if (selected[0].id == selected[1].id) {
+    return true;
+  }
+  else return false;
+}
+
 createBox(20);
