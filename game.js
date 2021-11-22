@@ -124,7 +124,7 @@ function onClickFunction(index) {
 
             }
         }
-        if (_score <= 9000) {
+        if (_score <= 0) {
             alert("Game Over");
             for (let i = 0; i < 20; i++) {
                 cardArray[i].delete();
