@@ -1,6 +1,6 @@
 import { Cover } from "./Cover.js";
 import { Label } from "./Label.js";
-import { Score } from "./Score.js";
+
 
 let randomizedImage = shuffle();
 function shuffle() {
