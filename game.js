@@ -3,6 +3,7 @@ import { Label } from "./Label.js";
 
 
 let randomizedImage = shuffle();
+document.body.style.backgroundColor = "black";
 function shuffle() {
     let array = ["url('./img/0.jpg')",
         "url('./img/1.jpg')",
