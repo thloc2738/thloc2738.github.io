@@ -1,7 +1,6 @@
 import { Cover } from "./Cover.js";
 import { Label } from "./Label.js";
 
-
 let randomizedImage = shuffle();
 document.body.style.backgroundColor = "black";
 function shuffle() {
