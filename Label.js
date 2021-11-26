@@ -5,8 +5,9 @@ export class Label extends Node {
         super();
         this._string = string || "";
         this.string = this._string;
-        this.view.style.color = 'black';
-        this.view.style.fontSize = "30px";
+        this.view.style.color = "black";
+        this.view.style.fontSize = "40px";
+        this.view.style.position = "absolute";
 
     }
 
@@ -18,12 +19,10 @@ export class Label extends Node {
         this._string = value;
         this.view.innerHTML = this._string;
     }
-
-    open() {
-        this.string = "";
+    showLabel() {
+        this.view.style.visibility = "visible";
     }
-
-    close(value) {
-        this.string = value;
+    hideLabel() {
+        this.view.style.visibility = "hidden";
     }
 }
