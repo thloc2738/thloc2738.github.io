@@ -37,5 +37,6 @@ export class Button extends Node {
     }
     hideButton() {
         this.view.style.display = "none";
+        this.view.style.visibility = "hidden";
     }
 }

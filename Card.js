@@ -31,14 +31,14 @@ export class Card extends Node {
         this.view.style.alignItems = "center";
         this.view.className = "card_" + this.string;
         console.log(this.view.className);
+        this.view.style.cursor = "pointer";
         //this.view.style.backgroundColor = "wheat";
     }
     createImg() {
         this._img = new Sprite(this._path);
         this.addChild(this._img);
-        this._img.height = 90;
         this._img.width = 90;
-
+        this._img.height = 90;
     }
     createLabel() {
         this._label = new Label(this.string);
@@ -48,12 +48,15 @@ export class Card extends Node {
     showCover() {
         this._card.view.style.visibility = "visible";
     }
-    hideCover() {
-        this._card.view.style.visibility = "hidden";
+    hideCover(isVisible) {
+        if(isVisible === true){
+            this._card.view.style.visibility = "hidden";
 
-        let tl = gsap.timeline({ repeat: 0, duration: 0 })
-        tl.to(this.view, { scaleX: 0, duration: 0.5 })
-        tl.to(this.view, { scaleX: 1, duration: 0.5 })
+            let tl = gsap.timeline({ repeat: 0, duration: 0 })
+            tl.to(this.view, { scaleX: 0, duration: 0.5 })
+            tl.to(this.view, { scaleX: 1, duration: 0.5 })
+        }
+
     }
 
     // showImage() {
@@ -67,10 +70,6 @@ export class Card extends Node {
         this._isDelete = value;
     }
     trueCard() {
-        // this._card.view.style.visibility = "hidden";
-        // this._img.view.style.visibility = "hidden";
-        // this._label.view.style.visibility = "hidden";
-
         setTimeout(() => {
             this._card.view.style.display = "none";
             this._img.view.style.display = "none";
