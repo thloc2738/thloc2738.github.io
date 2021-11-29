@@ -90,7 +90,6 @@ export class Game extends Node {
         this._score.view.style.justifyContent = "center";
         this._score.view.style.alignItems = "center";
         this._score.view.style.display = "flex";
-
     }
 
     createTableCards(array) {
@@ -129,6 +128,7 @@ export class Game extends Node {
         this.playBtn.hideButton();
         this.retryArray = array;
     }
+
     onClickCard(card) {
         this.clickAudio.play();
         if (this.canClick) {
@@ -186,8 +186,6 @@ export class Game extends Node {
                 this.createWrap("", "flex", "url('./img/gameover.jpeg')");
 
             }
-            // alert(message + score)
-
             let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
             tl.to(this.view, { opacity: 0, duration: 0 })
             tl.to(this.view, { opacity: 1, duration: 1 })
@@ -214,7 +212,6 @@ export class Game extends Node {
             this.listCard = [];
             this.canClick = true;
         }, 1000)
-
     }
 }
 

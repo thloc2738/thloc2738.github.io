@@ -1,6 +1,5 @@
 import { Node } from "./Node.js";
 export class Button extends Node {
-
     constructor(string, x, y, color) {
         super();
         this._string = string || "";
@@ -23,13 +22,11 @@ export class Button extends Node {
         this.view.addEventListener("click", () => {
             this.clickAudio.play();
         })
-
     }
 
     get string() {
         return this._string;
     }
-
     set string(value) {
         this._string = value;
         this.view.innerHTML = this._string;
@@ -37,7 +34,6 @@ export class Button extends Node {
     showButton() {
         this.view.style.visibility = "visible";
         this.view.style.display = "flex";
-
     }
     hideButton() {
         this.view.style.display = "none";

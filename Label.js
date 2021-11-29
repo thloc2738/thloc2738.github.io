@@ -8,13 +8,11 @@ export class Label extends Node {
         this.view.style.color = color;
         this.view.style.fontSize = "40px";
         this.view.style.position = "absolute";
-
     }
 
     get string() {
         return this._string;
     }
-
     set string(value) {
         this._string = value;
         this.view.innerHTML = this._string;
