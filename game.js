@@ -3,80 +3,7 @@ import { Sprite } from "./Sprite.js";
 import { Card } from "./Card.js";
 import { Node } from "./Node.js";
 import { Button } from "./button.js";
-let array23 =
-    ["./img/0.jpg",
-        "./img/0.jpg",
-        "./img/1.jpg",
-        "./img/1.jpg",
-        "./img/2.jpg",
-        "./img/2.jpg",
-        "./img/3.jpg",
-        "./img/3.jpg",
-        "./img/4.jpg",
-        "./img/4.jpg",
-        "./img/5.jpg",
-        "./img/5.jpg",
-        "./img/6.jpg",
-        "./img/6.jpg",
-        "./img/7.jpg",
-        "./img/7.jpg",
-        "./img/8.jpg",
-        "./img/8.jpg",
-        "./img/9.jpg",
-        "./img/9.jpg"];
 
-let array123 =
-    ["./img/0.jpg",
-        "./img/1.jpg",
-        "./img/1.jpg",
-        "./img/0.jpg",
-        "./img/2.jpg",
-        "./img/3.jpg",
-        "./img/3.jpg",
-        "./img/2.jpg",
-        "./img/4.jpg",
-        "./img/5.jpg",
-        "./img/5.jpg",
-        "./img/4.jpg",
-        "./img/6.jpg",
-        "./img/7.jpg",
-        "./img/7.jpg",
-        "./img/6.jpg",
-        "./img/8.jpg",
-        "./img/9.jpg",
-        "./img/9.jpg",
-        "./img/8.jpg"];
-function shuffle() {
-    let array =
-        ["./img/0.jpg",
-            "./img/1.jpg",
-            "./img/2.jpg",
-            "./img/3.jpg",
-            "./img/4.jpg",
-            "./img/5.jpg",
-            "./img/6.jpg",
-            "./img/7.jpg",
-            "./img/8.jpg",
-            "./img/9.jpg",
-            "./img/0.jpg",
-            "./img/1.jpg",
-            "./img/2.jpg",
-            "./img/3.jpg",
-            "./img/4.jpg",
-            "./img/5.jpg",
-            "./img/6.jpg",
-            "./img/7.jpg",
-            "./img/8.jpg",
-            "./img/9.jpg"];
-    let currentIndex = array.length, randomIndex;
-    while (currentIndex != 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
-    return array;
-}
 
 
 export class Game extends Node {
@@ -84,7 +11,7 @@ export class Game extends Node {
         super();
         this.canClick = true;
         this.listCard = [];
-        this.score = 2000;
+        this.score = null;
         this._score = null;
         this._btn = null;
         this.completed = [];
@@ -95,20 +22,47 @@ export class Game extends Node {
         this.replayBtn = null;
         this.gameArray = [];
         this.retryArray = [];
-        this.addScore = null;
-        this.minusScore = null;
         this._backgroundMusic = new Audio("./audio/spirited_away.mp3")
         this.clickAudio = new Audio("./audio/click.wav");
         this.matchAudio = new Audio("./audio/match.mp3");
         this.notMatchAudio = new Audio("./audio/pierrot_momimomi.mp3")
-<<<<<<< HEAD
-=======
+        this.overLabel = null;
+        this.gameTitle = new Label("Truc Xanh", "mediumseagreen");
+        this.gameTitle.x = 590;
+        this.gameTitle.y = 360;
     }
-    set backgroundMusic(value){
-        this._backgroundMusic = value;
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
+    shuffle() {
+        let array =
+            ["./img/0.jpg",
+                "./img/1.jpg",
+                "./img/2.jpg",
+                "./img/3.jpg",
+                "./img/4.jpg",
+                "./img/5.jpg",
+                "./img/6.jpg",
+                "./img/7.jpg",
+                "./img/8.jpg",
+                "./img/9.jpg",
+                "./img/0.jpg",
+                "./img/1.jpg",
+                "./img/2.jpg",
+                "./img/3.jpg",
+                "./img/4.jpg",
+                "./img/5.jpg",
+                "./img/6.jpg",
+                "./img/7.jpg",
+                "./img/8.jpg",
+                "./img/9.jpg"];
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+        return array;
     }
-    createWrap(color, show) {
+    createWrap(color, show, path) {
         this.view = document.createElement("div");
         document.body.appendChild(this.view);
         this.view.style.position = "absolute";
@@ -117,18 +71,14 @@ export class Game extends Node {
         this.view.style.height = "410px";
         this.x = 340;
         this.y = 190;
-        this.view.style.backgroundImage = "url('./img/background.jpeg')";
+        this.view.style.backgroundImage = path;
         this.view.style.backgroundSize = "contain";
         this.view.display = show;
         this.view.style.zIndex = "-1";
         return this;
     }
 
-<<<<<<< HEAD
     createLabelScore(score, x, y) {
-=======
-    createLabelScore(score,x,y) {
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
         this._score = new Label("Score: " + score, "black");
         document.body.appendChild(this._score.view);
         this._score.view.style.height = "70px";
@@ -143,47 +93,16 @@ export class Game extends Node {
 
     }
 
-<<<<<<< HEAD
-    createAddScore(color, scoreText, add_minusScore) {
-=======
-    createAddScore(color, scoreText, add_minusScore){
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
-        add_minusScore = new Label(scoreText, color);
-        document.body.appendChild(add_minusScore.view);
-        add_minusScore.view.style.height = "70px";
-        add_minusScore.view.style.width = "100px";
-        add_minusScore.view.style.top = "120px";
-<<<<<<< HEAD
-        add_minusScore.view.style.left = "645px";
-=======
-        add_minusScore.view.style.left ="645px";
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
-        add_minusScore.view.style.justifyContent = "center";
-        add_minusScore.view.style.alignItems = "center";
-        add_minusScore.view.style.display = "flex";
-        return add_minusScore;
-    }
-
     createTableCards(array) {
         const column = 5;
         const row = 4;
-<<<<<<< HEAD
-        // var music = this._backgroundMusic;
-        // music.play();
-        // music.loop = true;
-        this._backgroundMusic.play();
-        this._backgroundMusic.loop;
-        this.score = 2000;
-        this.canClick = true;
-=======
-        let music = this._backgroundMusic;
+        var music = this._backgroundMusic;
         music.play();
         music.loop = true;
-        this.score = 2000;
-        this.canClick = true;   
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
+        this.score = 5000;
+        this.canClick = true;
         let index = -1;
-        let div = this.createWrap("wheat");
+        let div = this.createWrap("wheat", "flex", "none");
         this.retryBtn.hideButton();
         this.replayBtn.hideButton();
         this.completed = [];
@@ -199,39 +118,20 @@ export class Game extends Node {
                 card.x = 210;
                 card.y = 160;
                 tl.delay(0.1 * index);
-                tl.to(card, { duration: 5, ease: "elastic.out(1.5, 0.5)", x: 10 + 100 * j, y: 10 + 100 * i });
+                tl.to(card, { duration: 2.5, ease: "elastic.out(1.5, 0.5)", x: 10 + 100 * j, y: 10 + 100 * i });
                 setTimeout(() => {
                     card.view.addEventListener("mousedown", this.onClickCard.bind(this, card));
-<<<<<<< HEAD
                 }, 3000);
             }
         };
         this.createLabelScore(this.score, 120, 340);
-        this.addScore = this.createAddScore("green", "+1000", this.addScore);
-        this.minusScore = this.createAddScore("red", "-500", this.minusScore);
-=======
-                }, 3000);  
-            }
-        };
-        this.createLabelScore(this.score,120,340);
-        this.addScore = this.createAddScore("green","+1000", this.addScore);
-        this.minusScore = this.createAddScore("red","-500", this.minusScore);
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
-        this.addScore.hideLabel();
-        this.minusScore.hideLabel();
-
         this._score.string = "Score: " + this.score;
         this.playBtn.hideButton();
         this.retryArray = array;
-<<<<<<< HEAD
-
-=======
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
     }
     onClickCard(card) {
         this.clickAudio.play();
         if (this.canClick) {
-
             card.children[2].hideLabel();
             this.listCard.push(card);
             if (this.listCard.length == 2) {
@@ -239,11 +139,7 @@ export class Game extends Node {
                 if (this.listCard[0].children[2].string === this.listCard[1].children[2].string) {
                     card.hideCover(false);
                     this.listCard.shift();
-<<<<<<< HEAD
                     this.canClick = true;
-=======
-                    this.canClick = true;                    
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
                 } else {
                     card.hideCover(true);
                     if (this.listCard.length >= 2) {
@@ -252,89 +148,59 @@ export class Game extends Node {
                             this.completed.push(this.listCard[0]);
                             this.completed.push(this.listCard[1]);
                             this.score += 1000;
-                            this.addScore.showLabel();
                             setTimeout(() => {
                                 this.matchAudio.play();
                             }, 1000);
-                            setTimeout(() => {
-                                this.addScore.hideLabel();
-                            }, 2000);
                             this.setMatched(true, this.score);
-<<<<<<< HEAD
-
-=======
-                           
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
                         } else {
                             this.score -= 500;
                             this.setMatched(false, this.score);
-                            this.minusScore.showLabel();
-<<<<<<< HEAD
                             setTimeout(() => {
                                 this.notMatchAudio.play();
                             }, 1000);
-                            setTimeout(() => {
-                                this.minusScore.hideLabel();
-                            }, 2000);
-
                         }
                         if (this.score <= 0) {
-                            this.displayDialog(2000, "Game Over", "", false)
-                            this._backgroundMusic.paused();
-=======
-                            setTimeout(() => {
-                                this.notMatchAudio.play();
-                            },1000);
-                           setTimeout(() => {
-                            this.minusScore.hideLabel();
-                           }, 2000);
-                           
-                        }
-                        if (this.score <= 0) {
-                            this.displayDialog(2000, "Game Over", "", false)
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
+                            this.displayDialog(2000, "Game Over", this.score, false);
                         }
                         if (this.completed.length == 20 && this.score != 0) {
-                            this.displayDialog(2700, "Congratuated, your score is: ", this.score, true)
+                            this.displayDialog(2700, "Congratuated, your score is: ", this.score, true);
                         }
                     }
                 }
             }
-<<<<<<< HEAD
             else {
-=======
-            else{
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
                 card.hideCover(true);
             }
         }
     }
 
-<<<<<<< HEAD
     displayDialog(time, message, score, isReplay) {
         setTimeout(() => {
             if (isReplay) {
                 this.replayBtn.showButton();
                 this.retryBtn.hideButton();
+                this.createWrap("", "flex", "url('./img/winner.jpg')");
             } else {
-=======
-    displayDialog(time, message, score, isReplay){
-        setTimeout(() => {
-            if(isReplay){
-                this.replayBtn.showButton();
-                this.retryBtn.hideButton();
-            }else{
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
                 this.retryBtn.showButton();
                 this.replayBtn.hideButton();
+                this.createWrap("", "flex", "url('./img/gameover.jpeg')");
+
             }
-            alert(message + score)
+            // alert(message + score)
+
+            let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
+            tl.to(this.view, { opacity: 0, duration: 0 })
+            tl.to(this.view, { opacity: 1, duration: 1 })
             this.canClick = false;
             this.listCard = [];
+            this.overLabel = new Label("Your score: " + score, "white");
+            this.overLabel.x = 480;
+            this.overLabel.y = 420;
+            this.overLabel.view.position = "absolute";
+            document.body.appendChild(this.overLabel.view);
         }, time)
     }
 
-<<<<<<< HEAD
     setMatched(isMatch, score) {
         this._score.string = "Score: " + (score <= 0 ? 0 : score);
         setTimeout(() => {
@@ -342,58 +208,13 @@ export class Game extends Node {
                 this.listCard[0].trueCard();
                 this.listCard[1].trueCard();
             } else {
-=======
-setMatched(isMatch, score){
-    this._score.string = "Score: " + (score <= 0 ? 0 : score);
-        setTimeout(() => {
-            if(isMatch){
-                this.listCard[0].trueCard();
-                this.listCard[1].trueCard();
-            }else{
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
                 this.listCard[0].wrongCard();
                 this.listCard[1].wrongCard();
             }
             this.listCard = [];
             this.canClick = true;
         }, 1000)
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
     }
 }
 
-let game = new Game();
-<<<<<<< HEAD
-game.playBtn = new Button("Play", 600, 460, "wheat");
-=======
-game.playBtn = new Button("Play", 520, 610, "wheat");
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
-game.replayBtn = new Button("Replay", 520, 610, "lightskyblue");
-game.retryBtn = new Button("Retry", 520, 610, "yellowgreen");
-document.body.appendChild(game.playBtn.view);
-document.body.appendChild(game.replayBtn.view);
-document.body.appendChild(game.retryBtn.view);
-game.replayBtn.hideButton();
-game.retryBtn.hideButton();
-game.createWrap("black");
-game.playBtn.view.addEventListener("click", function () {
-    game.createTableCards(array23);
-<<<<<<< HEAD
-
-})
-game.retryBtn.view.addEventListener("click", function () {
-    game.createTableCards(game.retryArray);
-})
-game.replayBtn.view.addEventListener("click", function () {
-=======
-})
-game.retryBtn.view.addEventListener("click",function(){
-    game.createTableCards(game.retryArray);
-})
-game.replayBtn.view.addEventListener("click", function(){
->>>>>>> b311893c758704db880dec3c3ed72c8960b7d0a2
-    game.createTableCards(shuffle());
-})

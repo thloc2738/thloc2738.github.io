@@ -19,6 +19,10 @@ export class Button extends Node {
         this.view.style.display = "flex";
         this.view.style.alignItems = "center";
         this.view.style.borderRadius = "500% 500% 400% 400%";
+        this.clickAudio = new Audio("./audio/click_Btn.wav")
+        this.view.addEventListener("click", () => {
+            this.clickAudio.play();
+        })
 
     }
 

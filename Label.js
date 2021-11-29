@@ -20,7 +20,6 @@ export class Label extends Node {
         this.view.innerHTML = this._string;
     }
     showLabel() {
-        // this.view.style.visibility = "visible";
         this.view.style.display = "none";
     }
     hideLabel() {

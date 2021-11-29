@@ -30,7 +30,6 @@ export class Card extends Node {
         this.view.style.display = "flex";
         this.view.style.alignItems = "center";
         this.view.className = "card_" + this.string;
-        console.log(this.view.className);
         this.view.style.cursor = "pointer";
         //this.view.style.backgroundColor = "wheat";
     }
@@ -49,9 +48,8 @@ export class Card extends Node {
         this._card.view.style.visibility = "visible";
     }
     hideCover(isVisible) {
-        if(isVisible === true){
+        if (isVisible === true) {
             this._card.view.style.visibility = "hidden";
-
             let tl = gsap.timeline({ repeat: 0, duration: 0 })
             tl.to(this.view, { scaleX: 0, duration: 0.5 })
             tl.to(this.view, { scaleX: 1, duration: 0.5 })
