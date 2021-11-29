@@ -30,6 +30,8 @@ export class Game extends Node {
         this.gameTitle = new Label("Truc Xanh", "mediumseagreen");
         this.gameTitle.x = 590;
         this.gameTitle.y = 360;
+        this.gameOverMusic = new Audio("./audio/gameover.mp3");
+        this.winnerMusic = new Audio("./audio/winner.mp3");
     }
     shuffle() {
         let array =
@@ -95,9 +97,11 @@ export class Game extends Node {
     createTableCards(array) {
         const column = 5;
         const row = 4;
-        var music = this._backgroundMusic;
-        music.play();
-        music.loop = true;
+        // var music = this._backgroundMusic;
+        // music.play();
+        // music.loop = true;
+        this._backgroundMusic.play();
+        this._backgroundMusic.loop;
         this.score = 5000;
         this.canClick = true;
         let index = -1;
@@ -118,6 +122,7 @@ export class Game extends Node {
                 card.y = 160;
                 tl.delay(0.1 * index);
                 tl.to(card, { duration: 2.5, ease: "elastic.out(1.5, 0.5)", x: 10 + 100 * j, y: 10 + 100 * i });
+
                 setTimeout(() => {
                     card.view.addEventListener("mousedown", this.onClickCard.bind(this, card));
                 }, 3000);
@@ -180,11 +185,14 @@ export class Game extends Node {
                 this.replayBtn.showButton();
                 this.retryBtn.hideButton();
                 this.createWrap("", "flex", "url('./img/winner.jpg')");
+                this._backgroundMusic.pause();
+                this.winnerMusic.play();
             } else {
                 this.retryBtn.showButton();
                 this.replayBtn.hideButton();
                 this.createWrap("", "flex", "url('./img/gameover.jpeg')");
-
+                this._backgroundMusic.pause();
+                this.gameOverMusic.play();
             }
             let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
             tl.to(this.view, { opacity: 0, duration: 0 })
@@ -196,6 +204,7 @@ export class Game extends Node {
             this.overLabel.y = 420;
             this.overLabel.view.position = "absolute";
             document.body.appendChild(this.overLabel.view);
+            this._backgroundMusic = new Audio("./audio/spirited_away.mp3")
         }, time)
     }
 
