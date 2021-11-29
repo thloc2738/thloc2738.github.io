@@ -39,10 +39,12 @@ game.playBtn.view.addEventListener("click", function () {
     game.gameTitle.hideLabel();
 })
 game.retryBtn.view.addEventListener("click", function () {
-    game.createTableCards(game.retryArray);
     game.overLabel.hideLabel();
+    game.gameOverMusic.pause;
+    game.createTableCards(game.retryArray);
 })
 game.replayBtn.view.addEventListener("click", function () {
-    game.createTableCards(game.shuffle());
     game.overLabel.hideLabel();
+    game.winnerMusic.pause;
+    game.createTableCards(game.shuffle());
 })
