@@ -3,8 +3,7 @@ import { Sprite } from "./Sprite.js";
 import { Card } from "./Card.js";
 import { Node } from "./Node.js";
 import { Button } from "./button.js";
-
-let array =
+let array23 =
     ["./img/0.jpg",
         "./img/0.jpg",
         "./img/1.jpg",
@@ -25,6 +24,28 @@ let array =
         "./img/8.jpg",
         "./img/9.jpg",
         "./img/9.jpg"];
+
+let array123 =
+    ["./img/0.jpg",
+        "./img/1.jpg",
+        "./img/1.jpg",
+        "./img/0.jpg",
+        "./img/2.jpg",
+        "./img/3.jpg",
+        "./img/3.jpg",
+        "./img/2.jpg",
+        "./img/4.jpg",
+        "./img/5.jpg",
+        "./img/5.jpg",
+        "./img/4.jpg",
+        "./img/6.jpg",
+        "./img/7.jpg",
+        "./img/7.jpg",
+        "./img/6.jpg",
+        "./img/8.jpg",
+        "./img/9.jpg",
+        "./img/9.jpg",
+        "./img/8.jpg"];
 function shuffle() {
     let array =
         ["./img/0.jpg",
@@ -57,6 +78,7 @@ function shuffle() {
     return array;
 }
 
+
 export class Game extends Node {
     constructor() {
         super();
@@ -68,8 +90,19 @@ export class Game extends Node {
         this.completed = [];
         this.temp = [];
         this.tempIndex = [];
+        this.playBtn = null;
+        this.retryBtn = null;
+        this.replayBtn = null;
+        this.gameArray = [];
+        this.retryArray = [];
+        this.addScore = null;
+        this.minusScore = null;
+        this._backgroundMusic = new Audio("./audio/spirited_away.mp3")
+        this.clickAudio = new Audio("./audio/click.wav");
+        this.matchAudio = new Audio("./audio/match.mp3");
+        this.notMatchAudio = new Audio("./audio/pierrot_momimomi.mp3")
     }
-    createWrap(color) {
+    createWrap(color, show) {
         this.view = document.createElement("div");
         document.body.appendChild(this.view);
         this.view.style.position = "absolute";
@@ -78,17 +111,21 @@ export class Game extends Node {
         this.view.style.height = "410px";
         this.x = 340;
         this.y = 190;
+        this.view.style.backgroundImage = "url('./img/background.jpeg')";
+        this.view.style.backgroundSize = "contain";
+        this.view.display = show;
+        this.view.style.zIndex = "-1";
         return this;
     }
 
-    createLabelScore(score) {
-        this._score = new Label("Score: " + score);
+    createLabelScore(score, x, y) {
+        this._score = new Label("Score: " + score, "black");
         document.body.appendChild(this._score.view);
         this._score.view.style.height = "70px";
         this._score.view.style.width = "300px";
         this._score.view.style.backgroundColor = "lightskyblue";
-        this._score.view.style.top = "120px";
-        this._score.view.style.left = "340px";
+        this._score.view.style.top = x + "px";
+        this._score.view.style.left = y + "px";
         this._score.view.style.borderRadius = "500px 500px 100px 100px";
         this._score.view.style.justifyContent = "center";
         this._score.view.style.alignItems = "center";
@@ -96,119 +133,169 @@ export class Game extends Node {
 
     }
 
-    createTableCards() {
+    createAddScore(color, scoreText, add_minusScore) {
+        add_minusScore = new Label(scoreText, color);
+        document.body.appendChild(add_minusScore.view);
+        add_minusScore.view.style.height = "70px";
+        add_minusScore.view.style.width = "100px";
+        add_minusScore.view.style.top = "120px";
+        add_minusScore.view.style.left = "645px";
+        add_minusScore.view.style.justifyContent = "center";
+        add_minusScore.view.style.alignItems = "center";
+        add_minusScore.view.style.display = "flex";
+        return add_minusScore;
+    }
+
+    createTableCards(array) {
         const column = 5;
-        let arr = [];
         const row = 4;
-        let imgIndex
-        //imgIndex = shuffle();
-        imgIndex = array;
+        // var music = this._backgroundMusic;
+        // music.play();
+        // music.loop = true;
+        this._backgroundMusic.play();
+        this._backgroundMusic.loop;
+        this.score = 2000;
+        this.canClick = true;
         let index = -1;
-        let score = 5000;
-
-
-
-
         let div = this.createWrap("wheat");
-
+        this.retryBtn.hideButton();
+        this.replayBtn.hideButton();
+        this.completed = [];
         for (let i = 0; i < row; i++) {
             for (let j = 0; j < column; j++) {
                 ++index;
-                let card = new Card(imgIndex[index], index + 1)
+                let card = new Card(array[index], index + 1)
                 card.createImg();
                 card.createCover();
                 card.createLabel();
-
                 this.view.appendChild(card.view);
                 let tl = gsap.timeline({ repeat: 0, repeatDelay: 0 });
                 card.x = 210;
                 card.y = 160;
-                tl.delay(0.1 * index)
-                // tl.to(card, { duration: 2.5, ease: CustomEase.create("custom", "M0,0 C0.762,-0.47 0.358,0.822 0.642,1.03 0.69,1.065 0.988,1.198 1,1 "), y: - 500 });
-                //tl.to(card, { x: 10 + 100 * j, y: 10 + 100 * i }, 1);
-                tl.to(card, { duration: 4, ease: "elastic.out(1.5, 0.5)", x: 10 + 100 * j, y: 10 + 100 * i });
-                card.view.addEventListener("mousedown", this.onClickCard.bind(this, card));
+                tl.delay(0.1 * index);
+                tl.to(card, { duration: 5, ease: "elastic.out(1.5, 0.5)", x: 10 + 100 * j, y: 10 + 100 * i });
+                setTimeout(() => {
+                    card.view.addEventListener("mousedown", this.onClickCard.bind(this, card));
+                }, 3000);
             }
         };
-        this.createLabelScore(this.score);
-        this._score.string = "Score: " + score;
-        //div.style.display = "none";
+        this.createLabelScore(this.score, 120, 340);
+        this.addScore = this.createAddScore("green", "+1000", this.addScore);
+        this.minusScore = this.createAddScore("red", "-500", this.minusScore);
+        this.addScore.hideLabel();
+        this.minusScore.hideLabel();
+
+        this._score.string = "Score: " + this.score;
+        this.playBtn.hideButton();
+        this.retryArray = array;
+
     }
     onClickCard(card) {
+        this.clickAudio.play();
         if (this.canClick) {
+
             card.children[2].hideLabel();
-            card.hideCover();
-            this.tempIndex.push(card.children[2].string);
             this.listCard.push(card);
-            this.temp.push(card.path);
-            if (this.tempIndex.length == 2) {
+            if (this.listCard.length == 2) {
                 this.canClick = false;
-                if (this.tempIndex[0] === this.tempIndex[1]) {
-                    // this.canClick = false
-                    setTimeout(() => {
-                        this.listCard[1].wrongCard();
-                        this.listCard = [];
-                        this.temp.length = [];
-                        this.canClick = true;
-                    }, 1500)
+                if (this.listCard[0].children[2].string === this.listCard[1].children[2].string) {
+                    card.hideCover(false);
+                    this.listCard.shift();
+                    this.canClick = true;
                 } else {
-                    if (this.temp.length >= 2 && this.listCard.length >= 2) {
+                    card.hideCover(true);
+                    if (this.listCard.length >= 2) {
                         this.canClick = false;
-                        if (this.temp[0] === this.temp[1]) {
+                        if (this.listCard[0].path === this.listCard[1].path) {
                             this.completed.push(this.listCard[0]);
                             this.completed.push(this.listCard[1]);
                             this.score += 1000;
-                            this._score.string = "Score: " + this.score;
+                            this.addScore.showLabel();
                             setTimeout(() => {
-                                this.listCard[0].trueCard();
-                                this.listCard[1].trueCard();
-                                this.listCard = [];
-                                this.temp.length = [];
-                                this.canClick = true
-                            }, 1000)
+                                this.matchAudio.play();
+                            }, 1000);
+                            setTimeout(() => {
+                                this.addScore.hideLabel();
+                            }, 2000);
+                            this.setMatched(true, this.score);
 
                         } else {
                             this.score -= 500;
-                            this._score.string = "Score: " + this.score;
+                            this.setMatched(false, this.score);
+                            this.minusScore.showLabel();
                             setTimeout(() => {
-                                this.listCard[0].wrongCard();
-                                this.listCard[1].wrongCard();
-                                this.listCard = [];
-                                this.temp.length = [];
-                                this.canClick = true
-                            }, 1000)
+                                this.notMatchAudio.play();
+                            }, 1000);
+                            setTimeout(() => {
+                                this.minusScore.hideLabel();
+                            }, 2000);
+
                         }
                         if (this.score <= 0) {
-                            setTimeout(() => {
-                                alert("Game Over")
-                            }, 2000)
+                            this.displayDialog(2000, "Game Over", "", false)
+                            this._backgroundMusic.paused();
                         }
                         if (this.completed.length == 20 && this.score != 0) {
-                            setTimeout(() => {
-                                alert("Congratuated, your score is: " + this.score);
-                            }, 2700)
+                            this.displayDialog(2700, "Congratuated, your score is: ", this.score, true)
                         }
                     }
                 }
-                this.tempIndex = [];
+            }
+            else {
+                card.hideCover(true);
             }
         }
     }
-}
-let game = new Game();
-let playBtn = new Button("Play", 520, 610, "wheat");
-let replayBtn = new Button("Replay", 410, 610, "lightskyblue");
-let retryBtn = new Button("Retry", 610, 610, "yellowgreen");
-document.body.appendChild(playBtn.view);
-document.body.appendChild(replayBtn.view);
-document.body.appendChild(retryBtn.view);
-replayBtn.hideButton();
-retryBtn.hideButton();
-game.createWrap("black");
-playBtn.view.addEventListener("click", function () {
-    playBtn.hideButton();
-    retryBtn.showButton();
-    replayBtn.showButton();
-    game.createTableCards();
 
+    displayDialog(time, message, score, isReplay) {
+        setTimeout(() => {
+            if (isReplay) {
+                this.replayBtn.showButton();
+                this.retryBtn.hideButton();
+            } else {
+                this.retryBtn.showButton();
+                this.replayBtn.hideButton();
+            }
+            alert(message + score)
+            this.canClick = false;
+            this.listCard = [];
+        }, time)
+    }
+
+    setMatched(isMatch, score) {
+        this._score.string = "Score: " + (score <= 0 ? 0 : score);
+        setTimeout(() => {
+            if (isMatch) {
+                this.listCard[0].trueCard();
+                this.listCard[1].trueCard();
+            } else {
+                this.listCard[0].wrongCard();
+                this.listCard[1].wrongCard();
+            }
+            this.listCard = [];
+            this.canClick = true;
+        }, 1000)
+
+    }
+}
+
+let game = new Game();
+game.playBtn = new Button("Play", 600, 460, "wheat");
+game.replayBtn = new Button("Replay", 520, 610, "lightskyblue");
+game.retryBtn = new Button("Retry", 520, 610, "yellowgreen");
+document.body.appendChild(game.playBtn.view);
+document.body.appendChild(game.replayBtn.view);
+document.body.appendChild(game.retryBtn.view);
+game.replayBtn.hideButton();
+game.retryBtn.hideButton();
+game.createWrap("black");
+game.playBtn.view.addEventListener("click", function () {
+    game.createTableCards(array23);
+
+})
+game.retryBtn.view.addEventListener("click", function () {
+    game.createTableCards(game.retryArray);
+})
+game.replayBtn.view.addEventListener("click", function () {
+    game.createTableCards(shuffle());
 })

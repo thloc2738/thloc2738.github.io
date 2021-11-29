@@ -1,11 +1,11 @@
 import { Node } from "./Node.js";
 export class Label extends Node {
 
-    constructor(string) {
+    constructor(string, color) {
         super();
         this._string = string || "";
         this.string = this._string;
-        this.view.style.color = "black";
+        this.view.style.color = color;
         this.view.style.fontSize = "40px";
         this.view.style.position = "absolute";
 
@@ -20,7 +20,8 @@ export class Label extends Node {
         this.view.innerHTML = this._string;
     }
     showLabel() {
-        this.view.style.visibility = "visible";
+        // this.view.style.visibility = "visible";
+        this.view.style.display = "none";
     }
     hideLabel() {
         this.view.style.visibility = "hidden";
